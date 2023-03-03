@@ -12,6 +12,7 @@ The frontend is located in the `/client` directory.
 2. run `yarn` to install the necessary dependencies
 3. run `yarn dev` and navigate to to http://localhost:5173/ in the browser
 4. the frontend uses [vanilla-extract](https://vanilla-extract.style/) for styling; please refer to their docs for usage.
+5. hack on
 
 ### Backend
 
