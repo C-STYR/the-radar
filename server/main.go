@@ -79,8 +79,8 @@ func findLink(line string) string {
 	return reviewLink.FindString(line)
 }
 
-// readRating parses an html file and returns a Ratings struct of collected ratings
-func parseReview(fileName string) Ratings {
+// parseReview parses an html file and returns a Ratings struct of collected info
+func parseReview(fileName string) *Ratings {
 	var ratings Ratings
 
 	readFile, err := os.Open(fileName)
@@ -131,7 +131,10 @@ func parseReview(fileName string) Ratings {
 			ratings.readerRating = num
 		}
 	}
-	return ratings
+	if ratings.authorRating >= 9 || ratings.readerRating >= 9 {
+		return &ratings
+	}
+	return nil
 }
 
 // func getIndexAndPrint(url string) {

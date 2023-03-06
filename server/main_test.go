@@ -41,11 +41,26 @@ func TestReadIndex(t *testing.T) {
 	}
 }
 
-func TestReadRating(t *testing.T) {
-	got := parseReview("./example-html/test-review.html")
-	want := Ratings{group: "Gorillaz", albumTitle: "Cracker Island", readerRating: 4, authorRating: 6}
+func TestParseReview(t *testing.T) {
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %v, want %v", got, want)
-	}
+	t.Run("correctly returns a nil value when ratings threshholds are unmet", func(t *testing.T) {
+
+		// in this case, want is the nil value of a pointer to Ratings struct
+		var want *Ratings
+		got := parseReview("./example-html/test-review1.html")
+
+		if got != want {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
+
+	t.Run("returns pointer to Ratings struct when ratings thresholds are met", func(t *testing.T) {
+
+		got := parseReview("./example-html/test-review2.html")
+		want := &Ratings{group: "Gorillaz", albumTitle: "Cracker Island", readerRating: 4, authorRating: 9}
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %v, want %v", got, want)
+		}
+	})
 }
