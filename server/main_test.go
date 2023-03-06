@@ -6,7 +6,7 @@ import (
 )
 
 var RegexpData = []struct {
-	raw	string
+	raw   string
 	match string
 }{
 	{`<a href="https://www.undertheradarmag.com/reviews/tonight_franz_ferdinand"><img class="dominant" src="https://undertheradarmag.com/uploads/review_images/FranzFerdinandTonight.jpg" width="150" alt="" /></a>`, `https://www.undertheradarmag.com/reviews/tonight_franz_ferdinand`},
@@ -28,9 +28,22 @@ func TestMatchRegex(t *testing.T) {
 	}
 }
 
-func TestReadIndex(t *testing.T){
+func TestReadIndex(t *testing.T) {
 	got := readIndex("./example-html/test-index.html")
-	want := []string{"https://www.undertheradarmag.com/reviews/fantasy_black_channel","https://www.undertheradarmag.com/reviews/the_finally_lp"}
+	// want := []string{"https://www.undertheradarmag.com/reviews/fantasy_black_channel", "https://www.undertheradarmag.com/reviews/the_finally_lp"}
+	want := map[string]bool{
+		"https://www.undertheradarmag.com/reviews/fantasy_black_channel": true,
+		"https://www.undertheradarmag.com/reviews/the_finally_lp":        true,
+	}
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %v, want %v", got, want)
+	}
+}
+
+func TestReadRating(t *testing.T) {
+	got := parseReview("./example-html/test-review.html")
+	want := Ratings{group: "Gorillaz", albumTitle: "Cracker Island", readerRating: 4, authorRating: 6}
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %v, want %v", got, want)
