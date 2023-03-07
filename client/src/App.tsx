@@ -4,7 +4,7 @@ function App() {
   return (
     <div className={hello}>
       {/* Add all HTML inside this div */}
-      <em>Laser Cats!</em>
+      <em>Cats with lasers</em>
     </div>
   );
 }
